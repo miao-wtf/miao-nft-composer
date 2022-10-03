@@ -3,20 +3,25 @@ type LayerImagesProps = {
 };
 export default function LayerImages({ files }: LayerImagesProps) {
   return (
-    <div style={{ position: "relative", width: 512, height: 512 }}>
-      {files.map((files, i) => (
-        <img
-          key={files.name}
-          src={URL.createObjectURL(files)}
+    <svg
+      id="critterz"
+      width="100%"
+      height="100%"
+      version="1.1"
+      viewBox="0 0 512 512"
+    >
+      {files.map((file, i) => (
+        <image
+          key={file.name}
+          xlinkHref={URL.createObjectURL(file)}
           style={{
             position: "absolute",
             imageRendering: "pixelated",
+            height: 512,
             width: 512,
-            bottom: 0,
-            left: 0,
           }}
         />
       ))}
-    </div>
+    </svg>
   );
 }
