@@ -17,6 +17,7 @@ const Home: NextPage = () => {
     Record<string, File[]>
   >({});
   const [choices, setChoices] = useState<Choice[]>([]);
+  const uploaded = Object.keys(filesGroupedByAttribute).length > 0;
 
   const sampleRandomChoices = (
     _filesGroupedByAttribute: Record<string, File[]>
@@ -59,62 +60,61 @@ const Home: NextPage = () => {
 
   return (
     <div className={styles.container}>
-      <Dropzone
-        onDrop={(acceptedFiles) => {
-          // group files by directory path
-          const newFilesGroupedByAttribute: Record<string, File[]> = {};
-          acceptedFiles.forEach((file) => {
-            const path: string = (file as any).path;
-            // get directory path from file path
-            const attribute = path.split("/").slice(2, -1).join("/");
-            if (!newFilesGroupedByAttribute[attribute]) {
-              newFilesGroupedByAttribute[attribute] = [];
-            }
-            newFilesGroupedByAttribute[attribute].push(file);
-          });
-          setFilesGroupedByAttribute(newFilesGroupedByAttribute);
-          sampleRandomChoices(newFilesGroupedByAttribute);
-        }}
-      >
-        {({ getRootProps, getInputProps }) => (
-          <div {...getRootProps()} className={styles.card}>
-            <input {...getInputProps()} />
-            <h2>Upload Folder Here</h2>
-            <p>Drag folder container all traits grouped by attributes here</p>
-          </div>
-        )}
-      </Dropzone>
-      {Object.keys(filesGroupedByAttribute).length > 0 && (
-        <>
+      <div style={{ display: "flex" }}>
+        <Dropzone
+          onDrop={(acceptedFiles) => {
+            // group files by directory path
+            const newFilesGroupedByAttribute: Record<string, File[]> = {};
+            acceptedFiles.forEach((file) => {
+              const path: string = (file as any).path;
+              // get directory path from file path
+              const attribute = path.split("/").slice(2, -1).join("/");
+              if (!newFilesGroupedByAttribute[attribute]) {
+                newFilesGroupedByAttribute[attribute] = [];
+              }
+              newFilesGroupedByAttribute[attribute].push(file);
+            });
+            setFilesGroupedByAttribute(newFilesGroupedByAttribute);
+            sampleRandomChoices(newFilesGroupedByAttribute);
+          }}
+        >
+          {({ getRootProps, getInputProps }) => (
+            <div {...getRootProps()} className={styles.card}>
+              <input {...getInputProps()} />
+              <h2>Upload Folder Here</h2>
+              <p>Drag folder container all traits grouped by attributes here</p>
+            </div>
+          )}
+        </Dropzone>
+        {uploaded && (
           <div className={styles.card}>
             <button
               onClick={() => sampleRandomChoices(filesGroupedByAttribute)}
+              style={{ fontSize: "2rem" }}
             >
               random
             </button>
           </div>
-          <div style={{ display: "flex" }}>
-            <div>
-              <List
-                items={choices}
-                setItems={setChoices}
-                render={renderChoice}
-              />
-            </div>
-            <div>
-              <div
-                className={styles.card}
-                style={{
-                  maxWidth: 1000,
-                  backgroundColor: "white",
-                  padding: "5rem",
-                }}
-              >
-                <LayerImages files={choices.map((choice) => choice.file)} />
-              </div>
+        )}
+      </div>
+      {uploaded && (
+        <div style={{ display: "flex" }}>
+          <div>
+            <List items={choices} setItems={setChoices} render={renderChoice} />
+          </div>
+          <div>
+            <div
+              className={styles.card}
+              style={{
+                maxWidth: 1000,
+                backgroundColor: "white",
+                padding: "5rem",
+              }}
+            >
+              <LayerImages files={choices.map((choice) => choice.file)} />
             </div>
           </div>
-        </>
+        </div>
       )}
     </div>
   );
