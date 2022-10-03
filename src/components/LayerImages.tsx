@@ -6,6 +6,7 @@ export default function LayerImages({ files }: LayerImagesProps) {
     <div style={{ position: "relative" }}>
       {files.map((files, i) => (
         <img
+          key={files.name}
           src={URL.createObjectURL(files)}
           style={{
             position: i ? "absolute" : "relative",
