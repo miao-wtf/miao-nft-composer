@@ -24,7 +24,10 @@ const Home: NextPage = () => {
   ) => {
     // sample random set of choices from attributes
     const newChoices: Choice[] = [];
-    Object.keys(_filesGroupedByAttribute).forEach((attribute) => {
+    let attributes = choices.length
+      ? choices.map((choice) => choice.attribute)
+      : Object.keys(_filesGroupedByAttribute);
+    attributes.forEach((attribute) => {
       const files = _filesGroupedByAttribute[attribute];
       const file = files[Math.floor(Math.random() * files.length)];
       newChoices.push({ attribute, file, id: attribute });
