@@ -3,13 +3,13 @@ type LayerImagesProps = {
 };
 export default function LayerImages({ files }: LayerImagesProps) {
   return (
-    <div style={{ position: "relative" }}>
+    <div style={{ position: "relative", width: 512, height: 512 }}>
       {files.map((files, i) => (
         <img
           key={files.name}
           src={URL.createObjectURL(files)}
           style={{
-            position: i ? "absolute" : "relative",
+            position: "absolute",
             imageRendering: "pixelated",
             width: 512,
             bottom: 0,
