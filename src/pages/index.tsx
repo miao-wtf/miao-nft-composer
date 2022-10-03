@@ -78,6 +78,7 @@ const Home: NextPage = () => {
               newFilesGroupedByAttribute[attribute].push(file);
             });
             setFilesGroupedByAttribute(newFilesGroupedByAttribute);
+            setChoices([]);
             sampleRandomChoices(newFilesGroupedByAttribute);
           }}
         >
