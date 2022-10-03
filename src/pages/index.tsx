@@ -85,29 +85,37 @@ const Home: NextPage = () => {
         )}
       </Dropzone>
       {Object.keys(filesGroupedByAttribute).length > 0 && (
-        <div className={styles.card}>
-          <button onClick={() => sampleRandomChoices(filesGroupedByAttribute)}>
-            random
-          </button>
-        </div>
-      )}
-      <div style={{ display: "flex" }}>
-        <div>
-          <List items={choices} setItems={setChoices} render={renderChoice} />
-        </div>
-        <div>
-          <div
-            className={styles.card}
-            style={{
-              maxWidth: 1000,
-              backgroundColor: "white",
-              padding: "5rem",
-            }}
-          >
-            <LayerImages files={choices.map((choice) => choice.file)} />
+        <>
+          <div className={styles.card}>
+            <button
+              onClick={() => sampleRandomChoices(filesGroupedByAttribute)}
+            >
+              random
+            </button>
           </div>
-        </div>
-      </div>
+          <div style={{ display: "flex" }}>
+            <div>
+              <List
+                items={choices}
+                setItems={setChoices}
+                render={renderChoice}
+              />
+            </div>
+            <div>
+              <div
+                className={styles.card}
+                style={{
+                  maxWidth: 1000,
+                  backgroundColor: "white",
+                  padding: "5rem",
+                }}
+              >
+                <LayerImages files={choices.map((choice) => choice.file)} />
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };
