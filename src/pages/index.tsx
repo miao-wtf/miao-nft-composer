@@ -51,11 +51,13 @@ const Home: NextPage = () => {
             setChoices(newChoices);
           }}
         >
-          {filesGroupedByAttribute[attribute].map((file) => (
-            <option key={file.name} value={file.name}>
-              {file.name.replace(/\.[^/.]+$/, "")}
-            </option>
-          ))}
+          {filesGroupedByAttribute[attribute]
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .map((file) => (
+              <option key={file.name} value={file.name}>
+                {file.name.replace(/\.[^/.]+$/, "")}
+              </option>
+            ))}
         </select>
       </div>
     );
